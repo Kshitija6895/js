@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <style>
+      #mainDiv {
+        border: 1px Solid #000;
+        height: 500px;
+        width: 500px;
+        position: fixed;
+      }
+      #innerDiv {
+        border: 1px Solid #000;
+        height: 50px;
+        width: 50px;
+        bottom: 0;
+        position: absolute;
+      }
+      .footer {
+        bottom: 25%;
+        position: absolute;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Hello</h1>
+    <div id="mainDiv">
+      <div id="innerDiv"></div>
+    </div>
+    <div class="footer">
+      <button id="start">Start</button>
+      <!--  <button id="stop">Stop</button> -->
+    </div>
+  </body>
+  <script>
+    var parentDiv = $("#mainDiv");
+    var innerDiv = $("#innerDiv");
+    var divHeight = $("#mainDiv").height();
+    var innerDivHeight = $("#innerDiv").height();
+    $(function () {
+      console.log("ready!");
+      $("#start").click(function () {
+        start(divHeight, innerDivHeight);
+      });
+    });
+
+    function start(divHeight, innerDivHeight) {
+      bottomToTop(divHeight, innerDivHeight);
+    }
+
+    function bottomToTop(divHeight, innerDivHeight) {
+      /* right to left */
+      console.log("bottomToTop", divHeight, innerDivHeight);
+      divHeight = divHeight - 50;
+      innerDiv.animate(
+        {
+          left: innerDivHeight != 0 ? 0 : innerDivHeight,
+          bottom: "+=" + divHeight,
+        },
+        5000,
+        function () {
+          topToRight(divHeight, innerDivHeight);
+        }
+      );
+    }
+
+    function topToRight(divHeight, innerDivHeight) {
+      divHeight = divHeight;
+      console.log("topToRight", divHeight, innerDivHeight);
+      innerDiv.animate(
+        {
+          right: innerDivHeight,
+          left: "+=" + divHeight,
+        },
+        5000,
+        function () {
+          rightToBottom(divHeight, innerDivHeight);
+        }
+      );
+    }
+
+    function rightToBottom(divHeight, innerDivHeight) {
+      divHeight = divHeight;
+      console.log("rightToBottom", divHeight, innerDivHeight);
+      innerDiv.animate(
+        {
+          bottom: innerDivHeight,
+          top: "+=" + divHeight,
+        },
+        5000,
+        function () {
+          bottomToLeft(divHeight, innerDivHeight);
+        }
+      );
+    }
+
+    function bottomToLeft(divHeight, innerDivHeight) {
+      divHeight = divHeight - 50;
+      console.log("bottomToLeft", divHeight, innerDivHeight);
+      innerDiv.animate(
+        {
+          left: innerDivHeight,
+          right: "+=" + divHeight,
+        },
+        5000,
+        function () {
+          innerDivHeight = innerDivHeight + innerDivHeight;
+          LeftToTop(divHeight, innerDivHeight);
+        }
+      );
+    }
+
+    function LeftToTop(divHeight, innerDivHeight) {
+      divHeight = divHeight - 50;
+      console.log("bottomToLeft", divHeight, innerDivHeight);
+      innerDiv.animate(
+        {
+          bottom: innerDivHeight != 0 ? 0 : innerDivHeight,
+          bottom: "+=" + divHeight,
+        },
+        5000,
+        function () {
+          start(divHeight, innerDivHeight);
+        }
+      );
+    }
+  </script>
+</html>
