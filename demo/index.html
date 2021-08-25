@@ -4,36 +4,98 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Square</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <style>
       #mainDiv {
         border: 1px Solid #000;
-        height: 500px;
-        width: 500px;
+        height: 550px;
+        width: 550px;
         position: fixed;
       }
       #innerDiv {
         border: 1px Solid #000;
+        border-radius: 20px;
         height: 50px;
         width: 50px;
         bottom: 0;
+        left: 0;
         position: absolute;
+        background-color: #fff;
       }
       .footer {
         bottom: 25%;
         position: absolute;
+      }
+      .one {
+        border: 2px Solid #000;
+        height: 450px;
+        width: 450px;
+        text-align: center;
+        padding: 50px;
+        background-color: #063520;
+      }
+      .two {
+        border: 2px Solid #fff;
+        height: 350px;
+        width: 350px;
+        text-align: center;
+        padding: 50px;
+        background-color: #128c5578;
+      }
+      .three {
+        border: 2px Solid #fff;
+        height: 250px;
+        width: 250px;
+        text-align: center;
+        padding: 50px;
+        background-color: #206948;
+      }
+      .four {
+        border: 2px Solid #fff;
+        height: 150px;
+        width: 150px;
+        text-align: center;
+        padding: 50px;
+        background-color: #547f6c;
+      }
+      .five {
+        border: 2px Solid #fff;
+        height: 150px;
+        width: 150px;
+        text-align: center;
+        background-color: #729a88;
+      }
+      .six {
+        border: 2px Solid #fff;
+        height: 50px;
+        width: 50px;
+        text-align: center;
+        margin: 50px;
+        background-color: #7ca994;
       }
     </style>
   </head>
   <body>
     <h1>Hello</h1>
     <div id="mainDiv">
-      <div id="innerDiv"></div>
+      <div class="one">
+        <div class="two">
+          <div class="three">
+            <div class="four">
+              <div class="five">
+                <div class="six">
+                  <div id="innerDiv"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="footer">
       <button id="start">Start</button>
-      <!--  <button id="stop">Stop</button> -->
+      <button id="stop">Stop</button>
     </div>
   </body>
   <script>
@@ -46,6 +108,9 @@
       $("#start").click(function () {
         start(divHeight, innerDivHeight);
       });
+      $("#stop").click(function () {
+        $(innerDiv).stop();
+      });
     });
 
     function start(divHeight, innerDivHeight) {
@@ -53,62 +118,61 @@
     }
 
     function bottomToTop(divHeight, innerDivHeight) {
-      /* right to left */
       console.log("bottomToTop", divHeight, innerDivHeight);
       divHeight = divHeight - 50;
       innerDiv.animate(
         {
-          left: innerDivHeight != 0 ? 0 : innerDivHeight,
+          left: innerDivHeight - 50,
           bottom: "+=" + divHeight,
         },
-        5000,
+
+        1000,
         function () {
-          topToRight(divHeight, innerDivHeight);
+          leftToRight(divHeight, innerDivHeight);
         }
       );
     }
 
-    function topToRight(divHeight, innerDivHeight) {
+    function leftToRight(divHeight, innerDivHeight) {
       divHeight = divHeight;
-      console.log("topToRight", divHeight, innerDivHeight);
+      console.log("leftToRight", divHeight, innerDivHeight);
       innerDiv.animate(
         {
           right: innerDivHeight,
           left: "+=" + divHeight,
         },
-        5000,
+        1000,
         function () {
-          rightToBottom(divHeight, innerDivHeight);
+          topToBottom(divHeight, innerDivHeight);
         }
       );
     }
 
-    function rightToBottom(divHeight, innerDivHeight) {
+    function topToBottom(divHeight, innerDivHeight) {
       divHeight = divHeight;
-      console.log("rightToBottom", divHeight, innerDivHeight);
+      console.log("topToBottom", divHeight, innerDivHeight);
       innerDiv.animate(
         {
           bottom: innerDivHeight,
           top: "+=" + divHeight,
         },
-        5000,
+        1000,
         function () {
-          bottomToLeft(divHeight, innerDivHeight);
+          rightToLeft(divHeight, innerDivHeight);
         }
       );
     }
 
-    function bottomToLeft(divHeight, innerDivHeight) {
+    function rightToLeft(divHeight, innerDivHeight) {
       divHeight = divHeight - 50;
-      console.log("bottomToLeft", divHeight, innerDivHeight);
+      console.log("rightToLeft", divHeight, innerDivHeight);
       innerDiv.animate(
         {
           left: innerDivHeight,
           right: "+=" + divHeight,
         },
-        5000,
+        1000,
         function () {
-          innerDivHeight = innerDivHeight + innerDivHeight;
           LeftToTop(divHeight, innerDivHeight);
         }
       );
@@ -116,15 +180,22 @@
 
     function LeftToTop(divHeight, innerDivHeight) {
       divHeight = divHeight - 50;
-      console.log("bottomToLeft", divHeight, innerDivHeight);
+      console.log("LeftToTop", divHeight, innerDivHeight);
       innerDiv.animate(
         {
-          bottom: innerDivHeight != 0 ? 0 : innerDivHeight,
+          left: innerDivHeight,
           bottom: "+=" + divHeight,
+          top: innerDivHeight,
         },
-        5000,
+        1000,
         function () {
-          start(divHeight, innerDivHeight);
+          if (divHeight === 0) {
+            $(innerDiv).stop();
+            alert("reached Successfully!.....");
+          } else {
+            innerDivHeight = innerDivHeight + 50;
+            leftToRight(divHeight, innerDivHeight);
+          }
         }
       );
     }
